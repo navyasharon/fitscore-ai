@@ -1,151 +1,196 @@
-FitScore AI
+# FitScore AI
 
-A tiny ruthless tool that compares a job description with one or more resumes and tells you, with zero sugar-coating, who actually fits the role — and who’s faking it.
+A ruthless, founder-style resume evaluator for a single Job Description and multiple candidate resumes.
 
-This is basically a “founder-style resume evaluator” powered by a Deno backend, Claude 3 Haiku, and a simple React + Tailwind UI.
+This project mirrors the thinking style of technical founders like CoreSpeed’s Milton—no fluff, no corporate HR nonsense. FitScore AI gives:
 
-It’s not fancy. It just works.
+* **FitScore** (how well each resume matches the JD)
+* **RiskScore** (how likely the resume is BS / AI‑rewritten / low‑signal)
+* **Founder‑style verdict** (blunt summary)
+* **Full analysis report** per candidate
 
-Why I Built This
+Backend uses **Deno + Zypher + Claude Haiku**, frontend uses **React + Vite + Tailwind**.
 
-After seeing founders complain that tons of resumes look like they were auto-optimized but don’t match real skills, I wanted something that:
+---
 
-Reads a JD
+## 🚀 Features
 
-Reads multiple resumes
+* Paste ONE Job Description
+* Paste MULTIPLE resumes
+* Get instant comparison table
+* Expand each row to see a detailed founder-style analysis
+* Designed for authenticity testing (fake resumes get exposed)
 
-Scores them: FitScore + RiskScore
+---
 
-Spits out a blunt verdict
+# 🧩 Architecture
 
-Generates a long-form “ruthless report” like a technical founder would
+```
+fitscore-ai/
+│
+├── backend/      → Deno + Zypher + Claude Haiku
+│   ├── server.ts
+│   ├── deno.json
+│   └── .env (NOT committed)
+│
+└── frontend/     → React + Vite + Tailwind
+    ├── src/
+    ├── index.html
+    └── .env (optional)
+```
 
-This is the tool I wanted while preparing for agent-infra roles (CoreSpeed, etc.) — and now it’s reusable for any job + resume combo.
+---
 
-Tech Stack
-Frontend
+# ⚙️ Requirements
 
-React + TypeScript
+* Node 18+
+* Deno 2+
+* Claude API key (Haiku is enough)
 
-Vite
+---
 
-TailwindCSS
+# 🔥 How to Run Locally (MOST IMPORTANT)
 
-Minimal state management (pure hooks)
+FitScore AI backend **cannot be deployed to Deno Deploy** because Zypher requires a writable filesystem.
+So you will run backend locally.
 
-Backend
+## 1️⃣ Clone repo
 
-Deno
+```bash
+git clone https://github.com/navyasharon/fitscore-ai.git
+cd fitscore-ai
+```
 
-Zypher Agent runtime
+---
 
-Claude 3 Haiku (Anthropic)
+## 2️⃣ Backend Setup
 
-Simple JSON REST API
-
-Infra
-
-Local dev only for now
-
-No DB, no auth, no cloud — intentionally simple
-
-How It Works
-1. Paste a Job Description
-
-Usually something like “Senior Full-Stack Engineer, agent infra, Rust/Go/Deno, Kubernetes, Zypher”.
-
-2. Add One or More Resumes
-
-Text only — doesn't parse PDFs yet.
-
-3. Hit Analyze
-
-Backend sends each resume + JD into a Zypher-powered agent prompt that extracts:
-
-FitScore (0–100)
-
-RiskScore (0–100)
-
-Verdict (1–2 lines)
-
-Full founder-style report (multi-paragraph)
-
-4. UI Shows Everything in a Table
-
-Expandable rows for the detailed report.
-
-Local Development
-Backend
+```bash
 cd backend
-deno task dev
+```
 
+Create your `.env` manually:
 
-Runs on:
-
-http://localhost:8000
-
-
-Make sure you have a .env file in /backend:
-
+```
 ANTHROPIC_API_KEY=your_key_here
+```
 
+Run backend:
 
-(Do NOT commit this. GitHub push protection will block you.)
+```bash
+deno task dev
+```
 
-Frontend
-cd frontend
+Backend runs on:
+
+```
+http://localhost:8000
+```
+
+If you see:
+
+```
+🟢 FitScore AI backend starting…
+Listening on http://localhost:8000/
+```
+
+You’re good.
+
+---
+
+## 3️⃣ Frontend Setup
+
+```bash
+cd ../frontend
 npm install
 npm run dev
+```
 
+Frontend runs on:
 
-Runs on:
-
+```
 http://localhost:5173
+```
+
+The frontend **automatically targets**:
+
+```
+http://localhost:8000
+```
+
+so no config changes needed.
+
+---
+
+# 🖥️ How to Use
+
+1. Open frontend in browser
+2. Paste any Job Description (ex: CoreSpeed Senior Full‑Stack Engineer)
+3. Add multiple resumes
+4. Click **Analyze Resumes**
+5. Inspect FitScore / RiskScore table
+6. Expand any candidate to see full founder-style breakdown
+
+---
+
+# 🧪 What to Show in the Demo Video
+
+This is EXACTLY what CoreSpeed wants.
+
+### 🎥 Demo script outline
+
+1. Start backend terminal: `deno task dev`
+2. Start frontend terminal: `npm run dev`
+3. Show JD input
+4. Add 2–3 resumes (one real, one exaggerated)
+5. Click Analyze
+6. Scroll table → show scores
+7. Open full report for one candidate
+8. End
+
+This is enough to pass any technical screen.
+
+---
+
+# 🚫 Why backend is NOT deployed
+
+Zypher writes its runtime state into:
+
+```
+.zypher/
+```
+
+Deno Deploy has a **read‑only filesystem**, so Zypher throws:
+
+```
+Requires write access to /src/.zypher
+```
+
+This is expected, not a bug.
+
+Backend is meant to run **locally only**.
+
+---
+
+# 📦 Next Steps (optional improvements)
+
+* Add PDF upload → auto text extraction
+* Add radar chart visualization for scores
+* Add CSV export of FitScore table
+* Add candidate-to-candidate comparison mode
+* Add drag‑drop resume files
+* Add JWT auth if you turn it into SaaS
+
+---
+
+# 👤 Author Notes
+
+This project was built fast, like a founder prototype.
+No over‑engineering. Direct, clean, and practical.
+
+If you want to continue improving it, feel free to fork and experiment.
+
+---
 
 
-Frontend expects the backend at port 8000.
 
-Project Structure
-fitscore-ai/
-  backend/
-    server.ts
-    deno.json
-    .env (ignored)
-  
-  frontend/
-    src/
-      App.tsx
-      main.tsx
-      index.css
-    public/
-    package.json
-
-  .gitignore
-  README.md
-
-Example Output
-Candidate 1 — FitScore 82, RiskScore 22
-
-Founder-style verdict:
-
-“Strong match. Real systems experience. Resume language looks natural. Missing a bit of Rust/Go depth but overall solid.”
-
-Candidate 2 — FitScore 54, RiskScore 61
-
-Founder-style verdict:
-
-“A lot of JD keywords appear copy-pasted. Claims don’t line up. Risky hire.”
-
-What’s Next (if I continue building this)
-
-PDF → text extraction
-
-Recruiter-style CSV export
-
-Support for multiple JDs (batch mode)
-
-Actual charts (FitScore distribution, skill gaps)
-
-Deployed backend to Deno Deploy / Fly.io
-
-Deployed frontend to Vercel
