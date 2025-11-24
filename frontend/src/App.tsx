@@ -101,7 +101,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex justify-center px-4 py-10">
       <div className="w-full max-w-6xl space-y-8">
-        {/* Header */}
+        
         <header className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight">
@@ -120,7 +120,7 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        {/* Main layout: JD + Resumes */}
+        {/* JD + Resumes */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* JD card */}
           <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 shadow-lg shadow-slate-950/40">
@@ -139,7 +139,7 @@ const App: React.FC = () => {
             />
           </section>
 
-          {/* Resumes card */}
+          {/* Resumes */}
           <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 shadow-lg shadow-slate-950/40 flex flex-col">
             <div className="flex items-center justify-between mb-3">
               <div>

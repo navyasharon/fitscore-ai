@@ -111,7 +111,7 @@ ${resumeText}
 `;
 }
 
-// Parse the model's tagged text output into our structured shape
+// tagged text output into our structured shape
 function parseModelOutput(raw: string): {
   fitScore: number | null;
   riskScore: number | null;
@@ -249,7 +249,7 @@ serve(
   },
   {
     // Deno std's `serve` will log the actual port;
-    // your frontend is already calling http://localhost:8000/analyze
+    // frontend is already calling http://localhost:8000/analyze
     addr: ":8000",
   },
 );
