@@ -1,0 +1,151 @@
+FitScore AI
+
+A tiny ruthless tool that compares a job description with one or more resumes and tells you, with zero sugar-coating, who actually fits the role — and who’s faking it.
+
+This is basically a “founder-style resume evaluator” powered by a Deno backend, Claude 3 Haiku, and a simple React + Tailwind UI.
+
+It’s not fancy. It just works.
+
+Why I Built This
+
+After seeing founders complain that tons of resumes look like they were auto-optimized but don’t match real skills, I wanted something that:
+
+Reads a JD
+
+Reads multiple resumes
+
+Scores them: FitScore + RiskScore
+
+Spits out a blunt verdict
+
+Generates a long-form “ruthless report” like a technical founder would
+
+This is the tool I wanted while preparing for agent-infra roles (CoreSpeed, etc.) — and now it’s reusable for any job + resume combo.
+
+Tech Stack
+Frontend
+
+React + TypeScript
+
+Vite
+
+TailwindCSS
+
+Minimal state management (pure hooks)
+
+Backend
+
+Deno
+
+Zypher Agent runtime
+
+Claude 3 Haiku (Anthropic)
+
+Simple JSON REST API
+
+Infra
+
+Local dev only for now
+
+No DB, no auth, no cloud — intentionally simple
+
+How It Works
+1. Paste a Job Description
+
+Usually something like “Senior Full-Stack Engineer, agent infra, Rust/Go/Deno, Kubernetes, Zypher”.
+
+2. Add One or More Resumes
+
+Text only — doesn't parse PDFs yet.
+
+3. Hit Analyze
+
+Backend sends each resume + JD into a Zypher-powered agent prompt that extracts:
+
+FitScore (0–100)
+
+RiskScore (0–100)
+
+Verdict (1–2 lines)
+
+Full founder-style report (multi-paragraph)
+
+4. UI Shows Everything in a Table
+
+Expandable rows for the detailed report.
+
+Local Development
+Backend
+cd backend
+deno task dev
+
+
+Runs on:
+
+http://localhost:8000
+
+
+Make sure you have a .env file in /backend:
+
+ANTHROPIC_API_KEY=your_key_here
+
+
+(Do NOT commit this. GitHub push protection will block you.)
+
+Frontend
+cd frontend
+npm install
+npm run dev
+
+
+Runs on:
+
+http://localhost:5173
+
+
+Frontend expects the backend at port 8000.
+
+Project Structure
+fitscore-ai/
+  backend/
+    server.ts
+    deno.json
+    .env (ignored)
+  
+  frontend/
+    src/
+      App.tsx
+      main.tsx
+      index.css
+    public/
+    package.json
+
+  .gitignore
+  README.md
+
+Example Output
+Candidate 1 — FitScore 82, RiskScore 22
+
+Founder-style verdict:
+
+“Strong match. Real systems experience. Resume language looks natural. Missing a bit of Rust/Go depth but overall solid.”
+
+Candidate 2 — FitScore 54, RiskScore 61
+
+Founder-style verdict:
+
+“A lot of JD keywords appear copy-pasted. Claims don’t line up. Risky hire.”
+
+What’s Next (if I continue building this)
+
+PDF → text extraction
+
+Recruiter-style CSV export
+
+Support for multiple JDs (batch mode)
+
+Actual charts (FitScore distribution, skill gaps)
+
+Deployed backend to Deno Deploy / Fly.io
+
+Deployed frontend to Vercel
