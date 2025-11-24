@@ -1,196 +1,111 @@
 # FitScore AI
 
-A ruthless, founder-style resume evaluator for a single Job Description and multiple candidate resumes.
+FitScore AI is a lightweight tool that compares **one Job Description** against **multiple candidate resumes** and produces:
 
-This project mirrors the thinking style of technical founders like CoreSpeed’s Milton—no fluff, no corporate HR nonsense. FitScore AI gives:
+- **FitScore** – how well the resume matches the JD  
+- **RiskScore** – how “AI-generated / BS-optimized” the resume looks  
+- **Verdict** – short, founder-style judgment  
+- **Full Report** – detailed evaluation of alignment, red flags, missing skills, etc.
 
-* **FitScore** (how well each resume matches the JD)
-* **RiskScore** (how likely the resume is BS / AI‑rewritten / low‑signal)
-* **Founder‑style verdict** (blunt summary)
-* **Full analysis report** per candidate
-
-Backend uses **Deno + Zypher + Claude Haiku**, frontend uses **React + Vite + Tailwind**.
-
----
-
-## 🚀 Features
-
-* Paste ONE Job Description
-* Paste MULTIPLE resumes
-* Get instant comparison table
-* Expand each row to see a detailed founder-style analysis
-* Designed for authenticity testing (fake resumes get exposed)
+Backend powered by **Deno + Zypher + Claude 3 Haiku**.  
+Frontend built using **React + Vite + TailwindCSS**.
 
 ---
 
-# 🧩 Architecture
+## 🚀 Tech Stack
 
-```
+### **Frontend**
+- React
+- TypeScript
+- Vite
+- TailwindCSS
+
+### **Backend**
+- Deno 2.x
+- Zypher Agent Framework
+- Anthropic Claude 3 Haiku
+
+---
+
+## 📁 Project Structure
+
 fitscore-ai/
 │
-├── backend/      → Deno + Zypher + Claude Haiku
-│   ├── server.ts
-│   ├── deno.json
-│   └── .env (NOT committed)
+├── backend/
+│ ├── server.ts
+│ ├── deno.json
+│ └── .env 
 │
-└── frontend/     → React + Vite + Tailwind
-    ├── src/
-    ├── index.html
-    └── .env (optional)
-```
+└── frontend/
+├── src/
+├── index.html
+└── .gitignore
+
+
+## 🧩 Requirements
+
+- **Node.js 18+**
+- **Deno 2+**
+- **Anthropic API key**  
+
 
 ---
 
-# ⚙️ Requirements
+# 🛠️ How to Run the Project Locally
 
-* Node 18+
-* Deno 2+
-* Claude API key (Haiku is enough)
-
----
-
-# 🔥 How to Run Locally (MOST IMPORTANT)
-
-FitScore AI backend **cannot be deployed to Deno Deploy** because Zypher requires a writable filesystem.
-So you will run backend locally.
-
-## 1️⃣ Clone repo
-
-```bash
+## **1. Clone the repository**
+```sh
 git clone https://github.com/navyasharon/fitscore-ai.git
 cd fitscore-ai
-```
-
----
-
-## 2️⃣ Backend Setup
-
-```bash
+2. Backend Setup (Deno)
+Go to backend folder:
 cd backend
-```
-
-Create your `.env` manually:
-
-```
-ANTHROPIC_API_KEY=your_key_here
-```
-
+------Create .env:
+       ANTHROPIC_API_KEY=your_key_here
 Run backend:
+  deno task dev
 
-```bash
-deno task dev
-```
+Backend runs at:
+     http://localhost:8000
 
-Backend runs on:
-
-```
-http://localhost:8000
-```
-
-If you see:
-
-```
-🟢 FitScore AI backend starting…
-Listening on http://localhost:8000/
-```
-
-You’re good.
-
----
-
-## 3️⃣ Frontend Setup
-
-```bash
+3. Frontend Setup (React)
+Navigate to frontend:
 cd ../frontend
-npm install
-npm run dev
-```
+     npm install
+     npm run dev
+Frontend runs at:
 
-Frontend runs on:
+    http://localhost:5173
 
-```
-http://localhost:5173
-```
+📌 How to Use
 
-The frontend **automatically targets**:
+Open the frontend
 
-```
-http://localhost:8000
-```
+Paste your Job Description
 
-so no config changes needed.
+Add multiple candidate resumes
 
----
+Click Analyze Resumes
 
-# 🖥️ How to Use
+See:
 
-1. Open frontend in browser
-2. Paste any Job Description (ex: CoreSpeed Senior Full‑Stack Engineer)
-3. Add multiple resumes
-4. Click **Analyze Resumes**
-5. Inspect FitScore / RiskScore table
-6. Expand any candidate to see full founder-style breakdown
+FitScore
 
----
+RiskScore
 
-# 🧪 What to Show in the Demo Video
+Verdict summary
 
-This is EXACTLY what CoreSpeed wants.
+Full detailed report
 
-### 🎥 Demo script outline
+❌ Why Backend Cannot Be Deployed (Yet)
 
-1. Start backend terminal: `deno task dev`
-2. Start frontend terminal: `npm run dev`
-3. Show JD input
-4. Add 2–3 resumes (one real, one exaggerated)
-5. Click Analyze
-6. Scroll table → show scores
-7. Open full report for one candidate
-8. End
+Zypher writes internal metadata to:
 
-This is enough to pass any technical screen.
-
----
-
-# 🚫 Why backend is NOT deployed
-
-Zypher writes its runtime state into:
-
-```
 .zypher/
-```
-
-Deno Deploy has a **read‑only filesystem**, so Zypher throws:
-
-```
-Requires write access to /src/.zypher
-```
-
-This is expected, not a bug.
-
-Backend is meant to run **locally only**.
-
----
-
-# 📦 Next Steps (optional improvements)
-
-* Add PDF upload → auto text extraction
-* Add radar chart visualization for scores
-* Add CSV export of FitScore table
-* Add candidate-to-candidate comparison mode
-* Add drag‑drop resume files
-* Add JWT auth if you turn it into SaaS
-
----
-
-# 👤 Author Notes
-
-This project was built fast, like a founder prototype.
-No over‑engineering. Direct, clean, and practical.
-
-If you want to continue improving it, feel free to fork and experiment.
-
----
 
 
+Cloud hosts like Deno Deploy / Netlify Functions / Vercel Edge are read-only, so they block the agent runtime.
+
+Local backend is required.
+     
 
