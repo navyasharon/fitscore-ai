@@ -1,4 +1,8 @@
+
 import React, { useState } from "react";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+
 
 type ResumeInput = {
   id: string;
@@ -60,7 +64,8 @@ const App: React.FC = () => {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/analyze", {
+      const res = await fetch(`${API_BASE_URL}/analyze`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
