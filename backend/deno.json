@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "dev": "deno run -A server.ts"
+  },
+  "nodeModulesDir": "auto",
+  "imports": {
+    "@corespeed/zypher": "jsr:@corespeed/zypher@^0.5.1",
+    "@std/dotenv": "jsr:@std/dotenv@^0.224.0",
+    "npm:rxjs-for-await": "npm:rxjs-for-await@^1.0.0"
+  }
+}
